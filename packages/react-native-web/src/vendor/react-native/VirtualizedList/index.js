@@ -1137,10 +1137,16 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           ? itemCount - 1
           : Math.min(itemCount - 1, this._highestMeasuredFrameIndex);
         const endFrame = this._getFrameMetricsApprox(end);
-        const tailSpacerLength =
+        // On some updates, tailSpacerLength is a negative value, which is an invalid value. 
+        // $tail-spacer’s height will ignore invalid values and  will 
+        // preserve the valid value of the previous state, instead of setting it to zero.
+        let tailSpacerLength =
           endFrame.offset +
           endFrame.length -
           (lastFrame.offset + lastFrame.length);
+        if(tailSpacerLength < 0) {
+            tailSpacerLength = 0
+        }
         this.pushOrUnshift(cells,
           <View key="$tail_spacer" style={{[spacerKey]: tailSpacerLength}} />,
         );
@@ -1415,12 +1421,22 @@ class VirtualizedList extends React.PureComponent<Props, State> {
   _onCellLayout(e, cellKey, index) {
     const layout = e.nativeEvent.layout;
     const next = {
-      offset: this._selectOffset(layout),
-      length: this._selectLength(layout),
-      index,
-      inLayout: true,
+        // OffsetTop gets the correct offset for each cell for inverted lists beacuse it ignores
+        // parent's transformations (like 'transform: [{scaleY: -1}]').
+        offset: !this.props.horizontal ? layout.offsetTop : layout.x,
+        length: this._selectLength(layout),
+        index,
+        inLayout: true,
     };
     const curr = this._frames[cellKey];
+
+    // Measures on discarded Low Priority updates will return zero for dimensions    
+    // no cell should have an offset of zero on frames, except for first cell
+    if (next.offset === 0 && index !== 0) {
+        this._scheduleCellsToRenderUpdate();
+        return;
+    }
+
     if (
       !curr ||
       next.offset !== curr.offset ||
@@ -1876,9 +1892,28 @@ class VirtualizedList extends React.PureComponent<Props, State> {
     // starving the renderer from actually laying out the objects and computing _averageCellLength.
     // If this is triggered in an `componentDidUpdate` followed by a hiPri cellToRenderUpdate
     // We shouldn't do another hipri cellToRenderUpdate
+
+    // We should trigger only high pirority updates on area with cells already measured or if measure new cells
+    // is keeping it up with scroll toward unmeasured area. Otherwise scrolling too fast toward unmeasured area  
+    // while new items are being measured may skip cells to be measured and cause scroll issues on scroll back to skipped area.
+    // 'visibleLength / 2' represents a balanced ‘bar check’ to be sure that all items 
+    // are gonna be measured and mounted as fast as possible when user scrolls quickly towards unmeasured area.
+    const isScrollOffsetMeasured = this._totalCellLength > (offset + Math.floor(visibleLength / 2));
+
+    // Allows High Priority updates as usual if the FlatList doesn't have 
+    // enough rendered items to fill both the visible area and the initialNumToRender items
+    const shouldCheckOffset = (
+        first > this.props.initialNumToRender && 
+        this._totalCellLength > visibleLength
+        ) ? (
+            isScrollOffsetMeasured
+        ) : (
+            this._averageCellLength
+        );
+
     if (
       hiPri &&
-      (this._averageCellLength || this.props.getItemLayout) &&
+      (shouldCheckOffset || this.props.getItemLayout) &&
       !this._hiPriInProgress
     ) {
       this._hiPriInProgress = true;
@@ -1969,12 +2004,6 @@ class VirtualizedList extends React.PureComponent<Props, State> {
               this._scrollMetrics,
             );
 
-            // revert the state if calculations are off
-            // this would only happen on the inverted flatlist (probably a bug with overscroll-behavior)
-            // when scrolled from bottom all the way up until onEndReached is triggered
-            if (newState.first === newState.last) {
-              newState = state
-            }
           }
         }
       } else {
