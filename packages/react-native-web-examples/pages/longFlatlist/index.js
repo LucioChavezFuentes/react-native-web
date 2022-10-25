@@ -2,7 +2,7 @@ import React from 'react';
 import { FlatList, StyleSheet, Text, Image } from 'react-native';
 
 const arrayData = [];
-for (let i = 0; i < 10000; i++) {
+for (let i = 0; i < 1000; i++) {
   if (i % 2 === 0) {
     arrayData.push({ item: i, type: 'text' });
   } else {
@@ -36,11 +36,14 @@ export default function LongFlatlist() {
           return <Text style={styles.listItemText}>{item}</Text>;
         }
       }}
+      style={styles.flatlistStyle}
+      windowSize={15}
     />
   );
 }
 
 const styles = StyleSheet.create({
   listItemText: { fontSize: 16 },
-  imageStyle: { width: 200, height: 200 }
+  imageStyle: { width: 200, height: 200 },
+  flatlistStyle: { height: '100vh', paddingLeft: 250 }
 });
