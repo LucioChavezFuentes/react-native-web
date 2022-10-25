@@ -31,7 +31,7 @@ export default function LongFlatlist() {
       maxToRenderPerBatch={1}
       renderItem={({ item: { item, type } }) => {
         if (type === 'image') {
-          <MyImage item={item} />;
+          return <MyImage item={item} />;
         } else {
           return <Text style={styles.listItemText}>{item}</Text>;
         }
