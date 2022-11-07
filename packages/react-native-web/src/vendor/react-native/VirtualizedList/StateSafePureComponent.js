@@ -8,7 +8,7 @@
  * @format
  */
 
-import invariant from 'invariant';
+import invariant from 'fbjs/lib/invariant';
 import * as React from 'react';
 
 /**

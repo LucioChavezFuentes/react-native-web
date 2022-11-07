@@ -16,7 +16,7 @@ import type {RenderItemType} from './VirtualizedListProps';
 import View from '../Components/View/View';
 import StyleSheet from '../StyleSheet/StyleSheet';
 import {VirtualizedListCellContextProvider} from './VirtualizedListContext.js';
-import invariant from 'invariant';
+import invariant from 'fbjs/lib/invariant';
 import * as React from 'react';
 
 export type Props<ItemT> = {

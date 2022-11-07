@@ -8,7 +8,7 @@
  * @format
  */
 
-import invariant from 'invariant';
+import invariant from 'fbjs/lib/invariant';
 
 export default class ChildListCollection<TList> {
   _cellKeyToChildren: Map<string, Set<TList>> = new Map();
