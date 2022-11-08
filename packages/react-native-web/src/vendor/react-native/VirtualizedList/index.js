@@ -21,20 +21,21 @@ import type {
   Separators,
 } from './VirtualizedListProps';
 
-import RefreshControl from '../Components/RefreshControl/RefreshControl';
-import ScrollView from '../Components/ScrollView/ScrollView';
-import View from '../Components/View/View';
-import Batchinator from '../Interaction/Batchinator';
-import {findNodeHandle} from '../ReactNative/RendererProxy';
-import flattenStyle from '../StyleSheet/flattenStyle';
-import StyleSheet from '../StyleSheet/StyleSheet';
+import RefreshControl from '../../../exports/RefreshControl';
+import ScrollView from '../../../exports/ScrollView';
+import View from '../../../exports/View';
+import Batchinator from '../Batchinator';
+import findNodeHandle from '../../../exports/findNodeHandle';
+import StyleSheet from '../../../exports/StyleSheet';
+const flattenStyle = StyleSheet.flatten;
+
 import clamp from '../Utilities/clamp';
-import infoLog from '../Utilities/infoLog';
+import infoLog from '../infoLog';
 import {CellRenderMask} from './CellRenderMask';
 import ChildListCollection from './ChildListCollection';
-import FillRateHelper from './FillRateHelper';
+import FillRateHelper from '../FillRateHelper';
 import StateSafePureComponent from './StateSafePureComponent';
-import ViewabilityHelper from './ViewabilityHelper';
+import ViewabilityHelper from '../ViewabilityHelper';
 import CellRenderer from './VirtualizedListCellRenderer';
 import {
   VirtualizedListCellContextProvider,
@@ -44,8 +45,8 @@ import {
 import {
   computeWindowedRenderLimits,
   keyExtractor as defaultKeyExtractor,
-} from './VirtualizeUtils';
-import invariant from 'invariant';
+} from '../VirtualizeUtils';
+import invariant from 'fbjs/lib/invariant';
 import * as React from 'react';
 
 export type {RenderItemProps, RenderItemType, Separators};
@@ -1013,6 +1014,7 @@ export default class VirtualizedList extends StateSafePureComponent<
       </VirtualizedListContextProvider>
     );
     let ret: React.Node = innerRet;
+    /* https://github.com/necolas/react-native-web/issues/2239: Re-enable when ScrollView.Context.Consumer is available.
     if (__DEV__) {
       ret = (
         <ScrollView.Context.Consumer>
@@ -1037,7 +1039,7 @@ export default class VirtualizedList extends StateSafePureComponent<
           }}
         </ScrollView.Context.Consumer>
       );
-    }
+    }*/
     if (this.props.debug) {
       return (
         <View style={styles.debug}>
