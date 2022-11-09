@@ -12,7 +12,7 @@
 
 import type {FrameMetricProps} from './VirtualizedListProps';
 
-const invariant = require('invariant');
+import invariant from 'fbjs/lib/invariant';
 
 export type ViewToken = {
   item: any,
@@ -357,4 +357,4 @@ function _isEntirelyVisible(
   return top >= 0 && bottom <= viewportHeight && bottom > top;
 }
 
-module.exports = ViewabilityHelper;
+export default ViewabilityHelper;
