@@ -51,6 +51,8 @@ import * as React from 'react';
 
 export type {RenderItemProps, RenderItemType, Separators};
 
+const __DEV__ = process.env.NODE_ENV !== 'production';
+
 const ON_END_REACHED_EPSILON = 0.001;
 
 let _usedIndexForKey = false;
