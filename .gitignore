@@ -3,3 +3,8 @@ build
 coverage
 dist
 node_modules
+# Visual studio
+.vscode
+.vs
+# OS X
+.DS_Store
