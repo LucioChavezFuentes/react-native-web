@@ -13,6 +13,8 @@ import typeof VirtualizedList from './VirtualizedList';
 import * as React from 'react';
 import {useContext, useMemo} from 'react';
 
+const __DEV__ = process.env.NODE_ENV !== 'production';
+
 type Context = $ReadOnly<{
   cellKey: ?string,
   getScrollMetrics: () => {
