@@ -39,6 +39,11 @@ for (let i = 0; i < 100; i++) {
 }
 
 class MyItem extends React.Component {
+  constructor(props) {
+    super(props);
+
+    for (let i = 0; i < 100000000; i++) {}
+  }
   render() {
     const { item } = this.props;
     return <Text style={styles.listItemText}>{item.body}</Text>;
