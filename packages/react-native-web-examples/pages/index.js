@@ -1,5 +1,5 @@
 import React from 'react';
-import { FlatList, StyleSheet, Text, Image, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -34,27 +34,15 @@ function generateRandomText() {
 }
 
 const arrayData = [];
-for (let i = 0; i < 1000; i++) {
-  if (i % 2 === 0) {
-    arrayData.push({ body: `${i}---${generateRandomText()}`, type: 'text' });
-  } else {
-    arrayData.push({
-      body: 'https://uploads.codesandbox.io/uploads/user/6b7f9c8e-d7f1-4c55-b52f-c0c5c187c5f7/DOw--arbol+fuego.jpeg',
-      type: 'image',
-      size: { height: getRandomInt(200, 600), width: getRandomInt(200, 600) }
-    });
-  }
+for (let i = 0; i < 100; i++) {
+  arrayData.push({ body: `${i}---${generateRandomText()}\n`, type: 'text' });
 }
 
-function MyImage({ item }) {
-  return (
-    <Image
-      source={{
-        uri: item.body
-      }}
-      style={{ height: item.size.height, width: item.size.width }}
-    />
-  );
+class MyItem extends React.Component {
+  render() {
+    const { item } = this.props;
+    return <Text style={styles.listItemText}>{item.body}</Text>;
+  }
 }
 
 export default function LongFlatlist() {
@@ -64,11 +52,7 @@ export default function LongFlatlist() {
         data={arrayData}
         maxToRenderPerBatch={1}
         renderItem={({ item }) => {
-          if (item.type === 'image') {
-            return <MyImage item={item} />;
-          } else {
-            return <Text style={styles.listItemText}>{item.body}</Text>;
-          }
+          return <MyItem item={item} />;
         }}
         windowSize={15}
       />
@@ -77,7 +61,6 @@ export default function LongFlatlist() {
 }
 
 const styles = StyleSheet.create({
-  listItemText: { fontSize: 16 },
-  imageStyle: { width: 200, height: 200 },
+  listItemText: { fontSize: 16, padding: 16 },
   flatlistStyle: { height: '100vh', padding: '100px 200px' }
 });
