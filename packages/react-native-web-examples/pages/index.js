@@ -86,8 +86,8 @@ class MyText extends React.Component {
 class MyItem extends React.Component {
   constructor(props) {
     super(props);
-
-    for (let i = 0; i < 100000000; i++) {}
+    // Let's make items exppensive to render
+    for (let i = 0; i < 200000000; i++) {}
   }
 
   render() {
