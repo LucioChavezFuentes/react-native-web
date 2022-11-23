@@ -1137,10 +1137,12 @@ class VirtualizedList extends React.PureComponent<Props, State> {
           ? itemCount - 1
           : Math.min(itemCount - 1, this._highestMeasuredFrameIndex);
         const endFrame = this._getFrameMetricsApprox(end);
-        const tailSpacerLength =
-          endFrame.offset +
-          endFrame.length -
-          (lastFrame.offset + lastFrame.length);
+        const tailSpacerLength = Math.max(
+            endFrame.offset +
+            endFrame.length -
+            (lastFrame.offset + lastFrame.length),
+            0,
+        );
         this.pushOrUnshift(cells,
           <View key="$tail_spacer" style={{[spacerKey]: tailSpacerLength}} />,
         );
