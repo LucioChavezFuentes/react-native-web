@@ -18,25 +18,54 @@ export default function MeasureTemplate({
   renderBoxWrapper = defaultBoxWrapper
 }) {
   const [measureLayoutStyle, setMeasureLayoutStyle] = React.useState({
-    x: '',
-    y: '',
-    pageX: '',
-    pageY: ''
+    currentMeasurement: {
+      x: '',
+      y: '',
+      pageX: '',
+      pageY: ''
+    },
+
+    newMeasurement: {
+      x: '',
+      y: '',
+      pageX: '',
+      pageY: ''
+    }
   });
 
   const boxRef = React.useRef(null);
 
   const onPressMeasure = () => {
-    boxRef.current.measure((x, y, width, height, pageX, pageY) => {
-      setMeasureLayoutStyle({
+    boxRef.current.measure(
+      (
         x,
         y,
         width,
         height,
         pageX,
-        pageY
-      });
-    });
+        pageY,
+        xNoTransform,
+        yNoTransform,
+        leftNoTransform,
+        topNoTransform
+      ) => {
+        setMeasureLayoutStyle({
+          currentMeasurement: {
+            x,
+            y,
+            pageX,
+            pageY
+          },
+
+          newMeasurement: {
+            x: xNoTransform,
+            y: yNoTransform,
+            pageX: leftNoTransform,
+            pageY: topNoTransform
+          }
+        });
+      }
+    );
   };
 
   return (
@@ -71,7 +100,7 @@ export default function MeasureTemplate({
                 Measure with Current Implementation (getBoundingClientRect)
               </Text>
               <Text style={styles.layoutInfo}>
-                {JSON.stringify(measureLayoutStyle, null, 2)}
+                {JSON.stringify(measureLayoutStyle.currentMeasurement, null, 2)}
               </Text>
             </View>
 
@@ -80,7 +109,7 @@ export default function MeasureTemplate({
                 Measure with New Implementation
               </Text>
               <Text style={styles.layoutInfo}>
-                {JSON.stringify(measureLayoutStyle, null, 2)}
+                {JSON.stringify(measureLayoutStyle.newMeasurement, null, 2)}
               </Text>
             </View>
           </View>
