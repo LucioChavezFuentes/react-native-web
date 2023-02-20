@@ -1316,12 +1316,16 @@ class VirtualizedList extends React.PureComponent<Props, State> {
 
   _onCellLayout(e, cellKey, index) {
     const layout = e.nativeEvent.layout;
+
+    console.log('layout', layout);
     const next = {
       offset: this._selectOffset(layout),
       length: this._selectLength(layout),
       index,
       inLayout: true,
     };
+
+    console.log('Cell No', index, 'offset', next.offset);
     const curr = this._frames[cellKey];
     if (
       !curr ||
@@ -1532,12 +1536,15 @@ class VirtualizedList extends React.PureComponent<Props, State> {
 
   _selectOffset(
     metrics: $ReadOnly<{
-      x: number,
-      y: number,
+      xNoTransform: number,
+      yNoTransform: number,
+      // x: number,
+      // y: number,
       ...
     }>,
   ): number {
-    return !horizontalOrDefault(this.props.horizontal) ? metrics.y : metrics.x;
+    return !horizontalOrDefault(this.props.horizontal) ? metrics.yNoTransform : metrics.xNoTransform;
+    // return !horizontalOrDefault(this.props.horizontal) ? metrics.y : metrics.x;
   }
 
   _maybeCallOnEndReached() {
