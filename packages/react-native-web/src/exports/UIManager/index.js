@@ -20,6 +20,28 @@ const getRect = (node) => {
   return { x, y, width, height, top, left };
 };
 
+const getRectNoTransform = (node) => {
+  const height = node.offsetHeight;
+  const width = node.offsetWidth;
+  let left = node.offsetLeft;
+  let top = node.offsetTop;
+  node = node.offsetParent;
+
+  while (node && node.nodeType === 1 /* Node.ELEMENT_NODE */) {
+    const scrollTop =
+      node.nodeName === 'BODY' ? window.pageYOffset : node.scrollTop;
+    const scrollLeft =
+      node.nodeName === 'BODY' ? window.pageXOffset : node.scrollLeft;
+
+    top += node.clientTop + node.offsetTop - scrollTop;
+    left += node.clientLeft + node.offsetLeft - scrollLeft;
+
+    node = node.offsetParent;
+  }
+
+  return { height, left, top, width };
+};
+
 const measureLayout = (node, relativeToNativeNode, callback) => {
   const relativeNode = relativeToNativeNode || (node && node.parentNode);
   if (node && relativeNode) {
@@ -28,7 +50,28 @@ const measureLayout = (node, relativeToNativeNode, callback) => {
       const { height, left, top, width } = getRect(node);
       const x = left - relativeRect.left;
       const y = top - relativeRect.top;
-      callback(x, y, width, height, left, top);
+
+      //Extends layout props only for testing comparison
+      const relativeRectNoTransform = getRectNoTransform(relativeNode);
+      const { left: leftNoTransform, top: topNoTransform } =
+        getRectNoTransform(node);
+
+      // console.log('Rect TopFamily relativeNode', 'top:', relativeRectNoTransform.top, 'left:', relativeRectNoTransform.left)
+      // console.log('Rect TopFamily Node', 'top:', topNoTransform, 'left:', leftNoTransform)
+      const xNoTransform = leftNoTransform - relativeRectNoTransform.left;
+      const yNoTransform = topNoTransform - relativeRectNoTransform.top;
+      callback(
+        x,
+        y,
+        width,
+        height,
+        left,
+        top,
+        xNoTransform,
+        yNoTransform,
+        leftNoTransform,
+        topNoTransform
+      );
     }, 0);
   }
 };

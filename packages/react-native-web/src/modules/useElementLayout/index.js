@@ -29,20 +29,45 @@ function getResizeObserver(): ?ResizeObserver {
           if (typeof onLayout === 'function') {
             // We still need to measure the view because browsers don't yet provide
             // border-box dimensions in the entry
-            UIManager.measure(node, (x, y, width, height, left, top) => {
-              const event: LayoutEvent = {
-                // $FlowFixMe
-                nativeEvent: {
-                  layout: { x, y, width, height, left, top }
-                },
-                timeStamp: Date.now()
-              };
-              Object.defineProperty(event.nativeEvent, 'target', {
-                enumerable: true,
-                get: () => entry.target
-              });
-              onLayout(event);
-            });
+            UIManager.measure(
+              node,
+              (
+                x,
+                y,
+                width,
+                height,
+                left,
+                top,
+                xNoTransform,
+                yNoTransform,
+                leftNoTransform,
+                topNoTransform
+              ) => {
+                const event: LayoutEvent = {
+                  // $FlowFixMe
+                  nativeEvent: {
+                    layout: {
+                      x,
+                      y,
+                      width,
+                      height,
+                      left,
+                      top,
+                      xNoTransform,
+                      yNoTransform,
+                      leftNoTransform,
+                      topNoTransform
+                    }
+                  },
+                  timeStamp: Date.now()
+                };
+                Object.defineProperty(event.nativeEvent, 'target', {
+                  enumerable: true,
+                  get: () => entry.target
+                });
+                onLayout(event);
+              }
+            );
           }
         });
       });
