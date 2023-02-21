@@ -1316,8 +1316,6 @@ class VirtualizedList extends React.PureComponent<Props, State> {
 
   _onCellLayout(e, cellKey, index) {
     const layout = e.nativeEvent.layout;
-
-    console.log('layout', layout);
     const next = {
       offset: this._selectOffset(layout),
       length: this._selectLength(layout),
@@ -1325,7 +1323,10 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       inLayout: true,
     };
 
-    console.log('Cell No', index, 'offset', next.offset);
+    console.log('Cell No', index);
+    console.log('New Measure Implementation', 'offset =', next.offset);
+    console.log('Current Measure Implementation', 'offset =', !horizontalOrDefault(this.props.horizontal) ? layout.y : layout.x);
+
     const curr = this._frames[cellKey];
     if (
       !curr ||
