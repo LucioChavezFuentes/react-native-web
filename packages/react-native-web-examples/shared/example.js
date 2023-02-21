@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 export default function Example(props) {
   return (
-    <View style={styles.root}>
+    <View style={[styles.root, props.rootStyle]}>
       <View style={styles.header}>
         <Text accessibilityLabel="Back" href="/" style={styles.back}>
           <svg
