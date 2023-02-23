@@ -1,23 +1,16 @@
 import { StyleSheet, View, Text } from 'react-native';
 import MeasureTemplate from '../../shared/measureTemplate';
 import Example from '../../shared/example';
+import nestedScrollView from '../../shared/nestedScrollView';
 
 export default function TestTemplate() {
-  function renderBoxWrapper(boxMarkUp) {
-    return (
-      <View style={styles.grandParentBoxContainer}>
-        <View style={styles.parentBoxContainer}>{boxMarkUp}</View>
-      </View>
-    );
-  }
-
   return (
     <>
       <Example title="Simple View Scroll Window">
         <View style={styles.windowScrollBlock}>
           <Text>Scroll Down the window to se the Yellow Box</Text>
         </View>
-        <MeasureTemplate renderBoxWrapper={renderBoxWrapper} />
+        <MeasureTemplate renderBoxWrapper={nestedScrollView} />
       </Example>
     </>
   );
