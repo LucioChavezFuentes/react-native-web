@@ -28,16 +28,13 @@ const getRectNoTransform = (node) => {
   node = node.offsetParent;
 
   while (node && node.nodeType === 1 /* Node.ELEMENT_NODE */) {
-    const scrollTop =
-      node.nodeName === 'BODY' ? window.pageYOffset : node.scrollTop;
-    const scrollLeft =
-      node.nodeName === 'BODY' ? window.pageXOffset : node.scrollLeft;
-
-    top += node.clientTop + node.offsetTop - scrollTop;
-    left += node.clientLeft + node.offsetLeft - scrollLeft;
-
+    left += node.offsetLeft + node.clientLeft - node.scrollLeft;
+    top += node.offsetTop + node.clientTop - node.scrollTop;
     node = node.offsetParent;
   }
+
+  top -= window.scrollY;
+  left -= window.scrollX;
 
   return { height, left, top, width };
 };
