@@ -13,7 +13,7 @@ export default function ChildViewParentsBorders() {
 
   return (
     <>
-      <Example title="Child View with Parents with Borders">
+      <Example title="Child View and Parents with Borders">
         <MeasureTemplate renderBoxWrapper={renderBoxWrapper} />
       </Example>
     </>
