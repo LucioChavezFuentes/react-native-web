@@ -111,7 +111,9 @@ const UIManager = {
     if (node) {
       setTimeout(() => {
         const { height, left, top, width } = getRect(node);
-        callback(left, top, width, height);
+        const { left: leftNoTransform, top: topNoTransform } =
+          getRectNoTransform(node);
+        callback(left, top, leftNoTransform, topNoTransform, width, height);
       }, 0);
     }
   },
