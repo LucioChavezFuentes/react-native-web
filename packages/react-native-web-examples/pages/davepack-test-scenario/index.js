@@ -16,9 +16,18 @@ export default class DavePackTestScenario extends React.Component {
   square = [];
 
   onSquarePress = (index) => () => {
-    this.square[index].measureInWindow((left, top) => {
-      this.setState({ top, left });
-    });
+    this.square[index].measureInWindow(
+      (left, top, leftNoTransform, topNoTransform) => {
+        console.log(
+          'leftNoTranasform',
+          leftNoTransform,
+          'topNoTransform',
+          topNoTransform
+        );
+        console.log('left', left, 'top', top);
+        this.setState({ top: topNoTransform, left: leftNoTransform });
+      }
+    );
   };
 
   render() {
