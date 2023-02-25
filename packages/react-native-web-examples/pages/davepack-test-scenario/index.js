@@ -10,7 +10,7 @@ import Example from '../../shared/example';
 
 export default class DavePackTestScenario extends React.Component {
   state = {
-    top: 0,
+    top: 100,
     left: 0
   };
 
