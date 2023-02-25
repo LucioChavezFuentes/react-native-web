@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View
 } from 'react-native';
+import Example from '../../shared/example';
 
 export default class DavePackTestScenario extends React.Component {
   state = {
@@ -34,72 +35,83 @@ export default class DavePackTestScenario extends React.Component {
     const { top, left } = this.state;
 
     return (
-      <View>
-        <View style={[styles.square, { top, left }]} />
-        <ScrollView style={styles.outer}>
-          <View style={styles.content}>
-            <Text>1</Text>
-            <View>
-              <TouchableOpacity
-                onPress={this.onSquarePress(0)}
-                style={{ marginVertical: 10 }}
-              >
-                <Text>come here square</Text>
-              </TouchableOpacity>
-            </View>
-            <View ref={(c) => (this.square[0] = c)} style={styles.comeSquare} />
-          </View>
-          <View style={styles.content}>
-            <Text>2</Text>
-            <View>
-              <TouchableOpacity
-                onPress={this.onSquarePress(1)}
-                style={{ marginVertical: 10 }}
-              >
-                <Text>come here square</Text>
-              </TouchableOpacity>
-            </View>
-            <View ref={(c) => (this.square[1] = c)} style={styles.comeSquare} />
-          </View>
-          <ScrollView style={styles.inner}>
+      <Example title="davepack Test Case Scenario">
+        <View style={styles.contentConatiner}>
+          <View style={[styles.square, { top, left }]} />
+          <ScrollView style={styles.outer}>
             <View style={styles.content}>
-              <Text>3</Text>
+              <Text>1</Text>
               <View>
                 <TouchableOpacity
-                  onPress={this.onSquarePress(2)}
+                  onPress={this.onSquarePress(0)}
                   style={{ marginVertical: 10 }}
                 >
                   <Text>come here square</Text>
                 </TouchableOpacity>
               </View>
               <View
-                ref={(c) => (this.square[2] = c)}
+                ref={(c) => (this.square[0] = c)}
                 style={styles.comeSquare}
               />
             </View>
             <View style={styles.content}>
-              <Text>4</Text>
+              <Text>2</Text>
               <View>
                 <TouchableOpacity
-                  onPress={this.onSquarePress(3)}
+                  onPress={this.onSquarePress(1)}
                   style={{ marginVertical: 10 }}
                 >
                   <Text>come here square</Text>
                 </TouchableOpacity>
               </View>
               <View
-                ref={(c) => (this.square[3] = c)}
+                ref={(c) => (this.square[1] = c)}
                 style={styles.comeSquare}
               />
             </View>
+            <ScrollView style={styles.inner}>
+              <View style={styles.content}>
+                <Text>3</Text>
+                <View>
+                  <TouchableOpacity
+                    onPress={this.onSquarePress(2)}
+                    style={{ marginVertical: 10 }}
+                  >
+                    <Text>come here square</Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  ref={(c) => (this.square[2] = c)}
+                  style={styles.comeSquare}
+                />
+              </View>
+              <View style={styles.content}>
+                <Text>4</Text>
+                <View>
+                  <TouchableOpacity
+                    onPress={this.onSquarePress(3)}
+                    style={{ marginVertical: 10 }}
+                  >
+                    <Text>come here square</Text>
+                  </TouchableOpacity>
+                </View>
+                <View
+                  ref={(c) => (this.square[3] = c)}
+                  style={styles.comeSquare}
+                />
+              </View>
+            </ScrollView>
           </ScrollView>
-        </ScrollView>
-      </View>
+        </View>
+      </Example>
     );
   }
 }
 
 const styles = StyleSheet.create({
+  contentConatiner: {
+    width: '100%'
+  },
   outer: {
     borderWidth: 1,
     borderColor: 'lightblue',
