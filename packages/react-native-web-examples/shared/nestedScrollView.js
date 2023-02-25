@@ -1,63 +1,77 @@
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView } from 'react-native';
+import { FirstChildScrollView, LastChildScrollView } from './childsScrollView';
+import styles from './styles';
 
-export default function scrollViewParent(boxMarkUp) {
-  return (
-    <View style={styles.grandParentBoxContainer}>
-      <ScrollView style={styles.parentScrollView}>
-        <View style={styles.childScrollView}>
-          <Text>Scroll Down to see the yellow box</Text>
-        </View>
+export default function scrollViewParent(
+  scrollViewProps = { horizontal: false }
+) {
+  return function renderMarkUp(boxMarkUp) {
+    return (
+      <View style={styles.grandParentBoxContainer}>
+        <ScrollView style={styles.parentScrollView} {...scrollViewProps}>
+          <FirstChildScrollView horizontal={scrollViewProps.horizontal} />
 
-        <View style={styles.childScrollView}>
-          <Text>Keep Scrolling Down to see the yellow box</Text>
-        </View>
-        {/* <ScrollView style={[styles.nestedScrollView]} contentContainerStyle={styles.childScrollView}> */}
-        <ScrollView style={[styles.nestedScrollView]}>
-          <View style={styles.childScrollView}>
+          <View style={styles.childScrollView(scrollViewProps.horizontal)}>
             <Text>
-              {' '}
-              You reach the child ScrollView, keep Scrolling Down to see the
-              yellow box
+              {!scrollViewProps.horizontal
+                ? `Keep Scrolling Down to see the yellow box`
+                : `Keep Scrolling Right to see the yellow box`}
             </Text>
           </View>
+          {/* <ScrollView style={[styles.nestedScrollView]} contentContainerStyle={styles.childScrollView}> */}
+          <ScrollView style={[styles.nestedScrollView]} {...scrollViewProps}>
+            <View style={styles.childScrollView(scrollViewProps.horizontal)}>
+              <Text>
+                {!scrollViewProps.horizontal
+                  ? `You reach the child ScrollView, keep Scrolling Down to see the yellow box`
+                  : `You reach the child ScrollView, keep Scrolling Right to see the yellow box`}
+              </Text>
+            </View>
 
-          {boxMarkUp}
+            {boxMarkUp}
 
-          <View style={styles.childScrollView}>
-            <Text>Scroll Up to see the yellow box</Text>
-          </View>
+            <LastChildScrollView horizontal={scrollViewProps.horizontal} />
+          </ScrollView>
         </ScrollView>
-      </ScrollView>
-    </View>
-  );
+      </View>
+    );
+  };
 }
 
-const styles = StyleSheet.create({
-  grandParentBoxContainer: {
-    borderColor: 'red',
-    padding: 15,
-    borderWidth: 20
-  },
+// const styles = StyleSheet.create({
+//   grandParentBoxContainer: {
+//     borderColor: 'red',
+//     padding: 15,
+//     borderWidth: 20,
+//     maxWidth: '100%',
+//     width: 600,
+//   },
 
-  nestedScrollView: {
-    borderColor: 'blue',
-    padding: 10,
-    borderWidth: 20,
-    height: 400
-    // height: '100%',
-  },
+//   nestedScrollView: {
+//     borderColor: 'blue',
+//     padding: 10,
+//     borderWidth: 20,
+//     height: 400,
+//     width: 400,
+//     maxHeight: '100%',
+//     maxWidth: '100%',
+//     // height: '100%',
+//   },
 
-  childScrollView: {
-    // height: '100%',
-    height: 400,
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
+//   childScrollView: {
+//     // height: '100%',
+//     maxHeight: '100%',
+//     maxWidth: '100%',
+//     height: 400,
+//     width: 400,
+//     alignItems: 'center',
+//     justifyContent: 'center'
+//   },
 
-  parentScrollView: {
-    borderColor: 'orange',
-    padding: 10,
-    borderWidth: 20,
-    height: 400
-  }
-});
+//   parentScrollView: {
+//     borderColor: 'orange',
+//     padding: 10,
+//     borderWidth: 20,
+//     height: 400
+//   }
+// });

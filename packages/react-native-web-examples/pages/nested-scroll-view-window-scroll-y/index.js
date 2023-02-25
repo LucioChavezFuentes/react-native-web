@@ -10,7 +10,7 @@ export default function TestTemplate() {
         <View style={styles.windowScrollBlock}>
           <Text>Scroll Down the window to se the Yellow Box</Text>
         </View>
-        <MeasureTemplate renderBoxWrapper={nestedScrollView} />
+        <MeasureTemplate renderBoxWrapper={nestedScrollView()} />
       </Example>
     </>
   );
