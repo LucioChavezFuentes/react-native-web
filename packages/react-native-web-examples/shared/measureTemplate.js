@@ -106,7 +106,7 @@ export default function MeasureTemplate({
 
             <View style={[styles.layoutInfoBlock]}>
               <Text accessibilityRole="heading" style={styles.heading}>
-                Measure with New Implementation
+                Measure with New Implementation (Ignore Transform)
               </Text>
               <Text style={styles.layoutInfo}>
                 {JSON.stringify(measureLayoutStyle.newMeasurement, null, 2)}
@@ -129,7 +129,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 1,
-    flexGrow: 1
+    flexGrow: 1,
+    maxHeight: '50vh'
+    // maxWidth: 600,
   },
   layoutBox: {
     backgroundColor: '#FFAD1F',
