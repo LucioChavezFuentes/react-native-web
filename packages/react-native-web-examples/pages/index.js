@@ -33,8 +33,11 @@ export default function IndexPage() {
       </View>
       <Text style={styles.text}>
         Compare New Measure Implementation VS Current Measure Implementation
-        (getBoundingClientRect) in then following scenarios, you should see
-        similar results with minor differences of ± 1.5 pixels:
+        (getBoundingClientRect).
+      </Text>
+      <Text style={styles.text}>
+        You should see similar results with minor differences of ± 1.5 pixels in
+        the following scenarios:
       </Text>
 
       <View accessibilityRole="list">
