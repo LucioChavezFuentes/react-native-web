@@ -1,35 +1,27 @@
 import { View, Text } from 'react-native';
 import MeasureTemplate from '../../shared/measureTemplate';
 import Example from '../../shared/example';
+import nestedScrollView from '../../shared/nestedScrollView';
 import styles from '../../shared/styles';
 
-export default function TestTemplate() {
-  function renderBoxWrapper(boxMarkUp) {
-    return (
-      <View style={styles.grandParentBoxContainer}>
-        <View style={styles.parentBoxContainer}>{boxMarkUp}</View>
-      </View>
-    );
-  }
-
+export default function NestedScrollViewWindowScrollX() {
+  const horizontal = true;
   return (
     <>
-      <Example title="View in Parents with Borders in Window Scroll Y">
-        <View style={styles.windowScrollBlock()}>
+      <Example horizontal title="Nested Scroll View Window Scroll X">
+        <View style={styles.windowScrollBlock(horizontal)}>
           <Text>Scroll Down the window to se the Yellow Box</Text>
         </View>
-        <MeasureTemplate renderBoxWrapper={renderBoxWrapper} />
+        <MeasureTemplate
+          renderBoxWrapper={nestedScrollView({ horizontal: true })}
+          style={{ alignSelf: 'flex-start' }}
+        />
       </Example>
     </>
   );
 }
 
 // const styles = StyleSheet.create({
-//   windowScrollBlock: {
-//     height: '100%',
-//     alignItems: 'center',
-//     justifyContent: 'center'
-//   },
 
 //   grandParentBoxContainer: {
 //     borderColor: 'red',

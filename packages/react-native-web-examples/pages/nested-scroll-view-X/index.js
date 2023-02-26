@@ -5,7 +5,7 @@ import nestedScrollView from '../../shared/nestedScrollView';
 export default function ChildViewScrollViewParent() {
   return (
     <>
-      <Example title="Nested ScrollView X axis">
+      <Example title="Nested ScrollView X">
         <MeasureTemplate
           renderBoxWrapper={nestedScrollView({ horizontal: true })}
         />
