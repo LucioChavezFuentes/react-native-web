@@ -70,7 +70,7 @@ export default StyleSheet.create({
     // height: '100%',
   },
 
-  windowScrollBlock: (horizontal) => ({
+  windowScrollBlock: ({ horizontal } = { horizontal: false }) => ({
     minHeight: '100vh',
     width: !horizontal ? 'auto' : '100vw',
     alignItems: 'center',

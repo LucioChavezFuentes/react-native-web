@@ -3,14 +3,14 @@ import MeasureTemplate from '../../shared/measureTemplate';
 import Example from '../../shared/example';
 import nestedScrollView from '../../shared/nestedScrollView';
 import styles from '../../shared/styles';
+import { scrollRightMessage } from '../../shared/constants';
 
 export default function NestedScrollViewWindowScrollX() {
-  const horizontal = true;
   return (
     <>
       <Example horizontal title="Nested Scroll View Window Scroll X">
-        <View style={styles.windowScrollBlock(horizontal)}>
-          <Text>Scroll Right the window to se the Yellow Box</Text>
+        <View style={styles.windowScrollBlock({ horizontal: true })}>
+          <Text>{scrollRightMessage}</Text>
         </View>
         <MeasureTemplate
           renderBoxWrapper={nestedScrollView({ horizontal: true })}
