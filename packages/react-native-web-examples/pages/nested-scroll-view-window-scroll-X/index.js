@@ -10,7 +10,7 @@ export default function NestedScrollViewWindowScrollX() {
     <>
       <Example horizontal title="Nested Scroll View Window Scroll X">
         <View style={styles.windowScrollBlock(horizontal)}>
-          <Text>Scroll Down the window to se the Yellow Box</Text>
+          <Text>Scroll Right the window to se the Yellow Box</Text>
         </View>
         <MeasureTemplate
           renderBoxWrapper={nestedScrollView({ horizontal: true })}
