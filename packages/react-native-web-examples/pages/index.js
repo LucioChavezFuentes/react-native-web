@@ -27,13 +27,14 @@ export default function IndexPage() {
           source={{ uri: logoUri }}
           style={styles.logo}
         />
-        <Text style={styles.title}>React Native for Web</Text>
+        <Text style={styles.title}>
+          Test the New Measure Implementation (Ignore Transformations)
+        </Text>
       </View>
       <Text style={styles.text}>
-        <Link href="https://github.com/necolas/react-native-web">
-          React Native for Web
-        </Link>{' '}
-        example app built on Next.js
+        Compare New Measure Implementation VS Current Measure Implementation
+        (getBoundingClientRect) in then following scenarios, you should see
+        similar results with minor differences of ± 1.5 pixels:
       </Text>
 
       <View accessibilityRole="list">
