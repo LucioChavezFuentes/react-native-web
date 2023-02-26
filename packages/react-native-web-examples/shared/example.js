@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 
-export default function Example(props) {
+export default function Example(props = { rootStyle: {}, horizontal: false }) {
   return (
     <View style={[styles.root, props.rootStyle]}>
       <View style={styles.header}>
@@ -17,14 +17,15 @@ export default function Example(props) {
           {props.title}
         </Text>
       </View>
-      <View style={styles.container}>{props.children}</View>
+      <View style={styles.container(props.horizontal)}>{props.children}</View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   root: {
-    height: '100vh'
+    // minHeight: '100vh',
+    // height: '100vh'
   },
   header: {
     paddingVertical: '1em',
@@ -46,9 +47,11 @@ const styles = StyleSheet.create({
     width: 40,
     alignItems: 'center'
   },
-  container: {
+  container: (horizontal) => ({
     alignItems: 'center',
     flex: 1,
-    overflowY: 'scroll'
-  }
+    overflowY: 'scroll',
+    overflowX: !horizontal ? 'auto' : undefined,
+    flexDirection: !horizontal ? 'column' : 'row'
+  })
 });

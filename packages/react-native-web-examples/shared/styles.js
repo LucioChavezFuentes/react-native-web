@@ -37,6 +37,8 @@ export default StyleSheet.create({
     borderWidth: 20,
     // width: 400,
     maxWidth: 600,
+    // maxHeight: 600,
+    maxHeight: '50vh',
     width: '100%',
     height: '100%'
   },
@@ -66,5 +68,12 @@ export default StyleSheet.create({
     height: 700,
     width: 700
     // height: '100%',
-  }
+  },
+
+  windowScrollBlock: (horizontal) => ({
+    minHeight: '100vh',
+    width: !horizontal ? 'auto' : '100vw',
+    alignItems: 'center',
+    justifyContent: 'center'
+  })
 });

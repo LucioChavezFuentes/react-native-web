@@ -15,7 +15,8 @@ function defaultBoxWrapper(boxMarkUp) {
 
 // export default function MeasureTemplate({BoxWrapper = DefaultBoxWrapper}) {
 export default function MeasureTemplate({
-  renderBoxWrapper = defaultBoxWrapper
+  renderBoxWrapper = defaultBoxWrapper,
+  style = {}
 }) {
   const [measureLayoutStyle, setMeasureLayoutStyle] = React.useState({
     currentMeasurement: {
@@ -70,7 +71,7 @@ export default function MeasureTemplate({
 
   return (
     <>
-      <View style={styles.pageContainer}>
+      <View style={[styles.pageContainer, style]}>
         <View style={styles.layoutContainer}>
           {/* <BoxWrapper>
             <View style={[styles.boxContainer]} ref={boxRef} >
@@ -122,15 +123,15 @@ export default function MeasureTemplate({
 const styles = StyleSheet.create({
   pageContainer: {
     width: '100%',
-    minHeight: '100%'
+    minHeight: '100vh'
   },
   layoutContainer: {
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
     flexShrink: 1,
-    flexGrow: 1,
-    maxHeight: '50vh'
+    flexGrow: 1
+    // maxHeight: '50vh'
     // maxWidth: 600,
   },
   layoutBox: {
