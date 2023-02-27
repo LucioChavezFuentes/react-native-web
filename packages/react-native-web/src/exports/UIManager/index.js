@@ -20,15 +20,25 @@ const getRect = (node) => {
   return { x, y, width, height, top, left };
 };
 
+function hasLayoutBox(node) {
+  return !!(
+    node.offsetWidth ||
+    node.offsetHeight ||
+    node.getClientRects().length
+  );
+}
+
 const measureLayout = (node, relativeToNativeNode, callback) => {
   const relativeNode = relativeToNativeNode || (node && node.parentNode);
   if (node && relativeNode) {
     setTimeout(() => {
-      const relativeRect = getBoundingClientRect(relativeNode);
-      const { height, left, top, width } = getRect(node);
-      const x = left - relativeRect.left;
-      const y = top - relativeRect.top;
-      callback(x, y, width, height, left, top);
+      if (hasLayoutBox(node) && hasLayoutBox(relativeNode)) {
+        const relativeRect = getBoundingClientRect(relativeNode);
+        const { height, left, top, width } = getRect(node);
+        const x = left - relativeRect.left;
+        const y = top - relativeRect.top;
+        callback(x, y, width, height, left, top);
+      }
     }, 0);
   }
 };
