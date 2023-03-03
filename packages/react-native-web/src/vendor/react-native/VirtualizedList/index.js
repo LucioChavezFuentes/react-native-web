@@ -742,9 +742,9 @@ class VirtualizedList extends React.PureComponent<Props, State> {
       if (this.props.inverted && this._scrollRef && this._scrollRef.getScrollableNode) {
         const node = (this._scrollRef: any).getScrollableNode();
         if (this.props.horizontal) {
-          node.scrollLeft = Math.min(node.scrollLeft - (ev.deltaX || ev.wheelDeltaX) , this._totalCellLength)
+          node.scrollLeft -= ev.deltaX || ev.wheelDeltaX
         } else {
-          node.scrollTop = Math.min(node.scrollTop - (ev.deltaY || ev.wheelDeltaY) , this._totalCellLength)
+          node.scrollTop -= ev.deltaY || ev.wheelDeltaY
         }
         ev.preventDefault();
       }
