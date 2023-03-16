@@ -420,6 +420,9 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
 
   state: State;
 
+   // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
+   invertedWheelEventHandler: ?(ev: any) => void;
+
   constructor(props: Props) {
     super(props);
     this._checkProps(props);
@@ -452,6 +455,20 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     this.state = {
       cellsAroundViewport: initialRenderRegion,
       renderMask: VirtualizedList._createRenderMask(props, initialRenderRegion),
+    };
+
+      // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
+    // For issue https://github.com/necolas/react-native-web/issues/995
+    this.invertedWheelEventHandler = (ev: any) => {
+      if (this.props.inverted && this._scrollRef && this._scrollRef.getScrollableNode) {
+        const node = (this._scrollRef: any).getScrollableNode();
+        if (this.props.horizontal) {
+          node.scrollLeft -= ev.deltaX || ev.wheelDeltaX
+        } else {
+          node.scrollTop -= ev.deltaY || ev.wheelDeltaY
+        }
+        ev.preventDefault();
+      }
     };
   }
 
@@ -692,6 +709,9 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
         cellKey: this.context.cellKey,
       });
     }
+
+    // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
+    this.setupWebWheelHandler();
   }
 
   componentWillUnmount() {
@@ -703,6 +723,30 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       tuple.viewabilityHelper.dispose();
     });
     this._fillRateHelper.deactivateAndFlush();
+
+    // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
+    this.teardownWebWheelHandler();
+  }
+
+  // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
+  setupWebWheelHandler() {
+    if (this._scrollRef && this._scrollRef.getScrollableNode) {
+      this._scrollRef.getScrollableNode().addEventListener('wheel',
+          this.invertedWheelEventHandler
+      );
+    } else {
+      setTimeout(() => this.setupWebWheelHandler(), 50);
+      return
+    }
+  }
+
+  // REACT-NATIVE-WEB patch to preserve during future RN merges: Support inverted wheel scroller.
+  teardownWebWheelHandler() {
+    if (this._scrollRef && this._scrollRef.getScrollableNode) {
+      this._scrollRef.getScrollableNode().removeEventListener('wheel',
+          this.invertedWheelEventHandler
+      );
+    }
   }
 
   static getDerivedStateFromProps(newProps: Props, prevState: State): State {
