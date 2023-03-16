@@ -8,7 +8,7 @@
  * @format
  */
 
-import type {ScrollResponderType} from '../Components/ScrollView/ScrollView';
+type ScrollResponderType = any;
 import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
 import type {
   LayoutEvent,

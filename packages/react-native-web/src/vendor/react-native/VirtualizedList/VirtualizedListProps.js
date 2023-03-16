@@ -8,7 +8,7 @@
  * @format
  */
 
-import typeof ScrollView from '../Components/ScrollView/ScrollView';
+import typeof ScrollView from '../../../exports/ScrollView';
 import type {
   LayoutEvent,
   FocusEvent,
@@ -19,7 +19,7 @@ import type {
   ViewabilityConfig,
   ViewabilityConfigCallbackPair,
   ViewToken,
-} from './ViewabilityHelper';
+} from '../ViewabilityHelper';
 
 import * as React from 'react';
 

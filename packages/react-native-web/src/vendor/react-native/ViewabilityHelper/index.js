@@ -10,7 +10,7 @@
 
 'use strict';
 
-import type {FrameMetricProps} from './VirtualizedListProps';
+import type {FrameMetricProps} from '../VirtualizedList/VirtualizedListProps';
 
 import invariant from 'fbjs/lib/invariant';
 
