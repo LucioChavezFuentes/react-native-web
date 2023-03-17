@@ -463,9 +463,11 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       if (this.props.inverted && this._scrollRef && this._scrollRef.getScrollableNode) {
         const node = (this._scrollRef: any).getScrollableNode();
         if (this.props.horizontal) {
-          node.scrollLeft -= ev.deltaX || ev.wheelDeltaX
+          const nextScrollLeft = node.scrollLeft - (ev.deltaX || ev.wheelDeltax);
+          node.scrollLeft = !this.props.getItemLayout ? Math.min(nextScrollLeft, this._totalCellLength) : nextScrollLeft;
         } else {
-          node.scrollTop -= ev.deltaY || ev.wheelDeltaY
+          const nextScrollTop = node.scrollTop - (ev.deltaY || ev.wheelDeltaY);
+          node.scrollTop = !this.props.getItemLayout ? Math.min(nextScrollTop, this._totalCellLength) : nextScrollTop;
         }
         ev.preventDefault();
       }
