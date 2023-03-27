@@ -28,19 +28,11 @@ const getRect = (node) => {
   return { width, height, top, left };
 };
 
-function hasLayoutBox(node) {
-  return !!(
-    node.offsetWidth ||
-    node.offsetHeight ||
-    node.getClientRects().length
-  );
-}
-
 const measureLayout = (node, relativeToNativeNode, callback) => {
   const relativeNode = relativeToNativeNode || (node && node.parentNode);
   if (node && relativeNode) {
     setTimeout(() => {
-      if (hasLayoutBox(node) && hasLayoutBox(relativeNode)) {
+      if (node.isConnected && relativeNode.isConnected) {
         const relativeRect = getRect(relativeNode);
         const { height, left, top, width } = getRect(node);
         const x = left - relativeRect.left;
