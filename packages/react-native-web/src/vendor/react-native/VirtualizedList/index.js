@@ -457,7 +457,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       if (this.props.inverted && this._scrollRef && this._scrollRef.getScrollableNode) {
         const node = (this._scrollRef: any).getScrollableNode();
         if (this.props.horizontal) {
-          const nextScrollLeft = node.scrollLeft - (ev.deltaX || ev.wheelDeltax);
+          const nextScrollLeft = node.scrollLeft - (ev.deltaX || ev.wheelDeltaX);
           node.scrollLeft = !this.props.getItemLayout ? Math.min(nextScrollLeft, this._totalCellLength) : nextScrollLeft;
         } else {
           const nextScrollTop = node.scrollTop - (ev.deltaY || ev.wheelDeltaY);
@@ -956,7 +956,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
                 element.props.onLayout(event);
               }
             },
-            style: StyleSheet.compose(inversionStyle, element.props.style),
+            style: [inversionStyle, element.props.style],
           })}
         </VirtualizedListCellContextProvider>,
       );
