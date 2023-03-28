@@ -360,7 +360,7 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
     if (this._scrollRef && this._scrollRef.getScrollableNode) {
       return this._scrollRef.getScrollableNode();
     } else {
-      return findNodeHandle(this._scrollRef);
+      return this._scrollRef;
     }
   }
 
@@ -371,12 +371,6 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
       return this._scrollRef.getScrollRef();
     } else {
       return this._scrollRef;
-    }
-  }
-
-  setNativeProps(props: Object) {
-    if (this._scrollRef) {
-      this._scrollRef.setNativeProps(props);
     }
   }
 
@@ -926,10 +920,10 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
           key="$header">
           <View
             onLayout={this._onLayoutHeader}
-            style={StyleSheet.compose(
+            style={[
               inversionStyle,
               this.props.ListHeaderComponentStyle,
-            )}>
+            ]}>
             {
               // $FlowFixMe[incompatible-type] - Typing ReactNativeComponent revealed errors
               element
@@ -1048,10 +1042,10 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
           key="$footer">
           <View
             onLayout={this._onLayoutFooter}
-            style={StyleSheet.compose(
+            style={[
               inversionStyle,
               this.props.ListFooterComponentStyle,
-            )}>
+            ]}>
             {
               // $FlowFixMe[incompatible-type] - Typing ReactNativeComponent revealed errors
               element
@@ -1986,10 +1980,10 @@ class VirtualizedList extends StateSafePureComponent<Props, State> {
 
 const styles = StyleSheet.create({
   verticallyInverted: {
-    transform: [{scaleY: -1}],
+    transform: 'scaleY(-1)',
   },
   horizontallyInverted: {
-    transform: [{scaleX: -1}],
+    transform: 'scaleX(-1)',
   },
   debug: {
     flex: 1,
